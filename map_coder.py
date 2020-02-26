@@ -1,6 +1,8 @@
 import io
 import sys
+import urllib.request
 
+from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QMainWindow
 
 from static_map import get_map
@@ -18,9 +20,14 @@ class MapCoder(QMainWindow, Ui_MapWindow):
         map_params = {
             "l": "map",
             "size": '450,450',
-            "pt": coords}
+            "ll": coords,
+            "spn": '0.016457,0.00619'
+            #"pt": coords
+        }
         try:
             result_map = get_map(map_params)
-            image = io.BytesIO(result_map)
+            pm = QPixmap()
+            pm.loadFromData(result_map)
+            self.image_view_label.setPixmap(pm)
         except Exception:
             print('error')
