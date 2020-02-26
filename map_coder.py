@@ -1,3 +1,4 @@
+import io
 import sys
 
 from PyQt5.QtWidgets import QMainWindow
@@ -17,9 +18,9 @@ class MapCoder(QMainWindow, Ui_MapWindow):
         map_params = {
             "l": "map",
             "size": '450,450',
-            "pt": "~".join(coords)}
+            "pt": coords}
         try:
             result_map = get_map(map_params)
-            print(result_map)
+            image = io.BytesIO(result_map)
         except Exception:
             print('error')
