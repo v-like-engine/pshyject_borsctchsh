@@ -26,7 +26,7 @@ class Ui_MapWindow(object):
         self.page = QtWidgets.QWidget()
         self.page.setObjectName("page")
         self.image_view_label = QtWidgets.QLabel(self.page)
-        self.image_view_label.setGeometry(QtCore.QRect(0, 0, 1280, 690))
+        self.image_view_label.setGeometry(QtCore.QRect(0, 0, 1280, 701))
         self.image_view_label.setText("")
         self.image_view_label.setObjectName("image_view_label")
         self.slider_size = QtWidgets.QSlider(self.page)

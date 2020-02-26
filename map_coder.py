@@ -21,13 +21,13 @@ class MapCoder(QMainWindow, Ui_MapWindow):
             "l": "map",
             "size": '450,450',
             "ll": coords,
-            "spn": '0.016457,0.00619'
-            #"pt": coords
-        }
+            "spn": '0.016457,0.00619',
+            "pt": coords}
         try:
             result_map = get_map(map_params)
             pm = QPixmap()
             pm.loadFromData(result_map)
+            pm = pm.scaledToWidth(1280)
             self.image_view_label.setPixmap(pm)
         except Exception:
             print('error')
