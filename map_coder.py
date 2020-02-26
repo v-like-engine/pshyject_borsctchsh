@@ -26,9 +26,10 @@ class MapCoder(QMainWindow, Ui_MapWindow):
             "l": "map",
             "size": '450,450',
             "ll": coords,
-            "spn": spn,
-            "pt": coords}
+            "spn": spn}
+            # "pt": coords}
         self.draw_map()
+        # 37.677751,55.757718
 
     def keyPressEvent(self, event):
         if event.key() == Qt.Key_PageUp:
@@ -37,15 +38,23 @@ class MapCoder(QMainWindow, Ui_MapWindow):
             self.change_spn('-')
 
     def change_spn(self, type_of_changing):
-        change_x, change_y = 10, 10
+        change_x, change_y = 2, 2
         if type_of_changing == '+':
             self.spn_x *= change_x
             self.spn_y *= change_y
         if type_of_changing == '-':
-            self.spn_x //= change_x
-            self.spn_y //= change_y
-        self.spn_x = round(self.spn_x, 3)
-        self.spn_y = round(self.spn_y, 3)
+            self.spn_x /= change_x
+            self.spn_y /= change_y
+        self.spn_x = round(self.spn_x, 4)
+        self.spn_y = round(self.spn_y, 4)
+        if self.spn_x == 0:
+            self.spn_x = 0.0001
+        elif self.spn_x > 100:
+            self.spn_x = 99.0000
+        if self.spn_y == 0:
+            self.spn_y = 0.0001
+        elif self.spn_y > 100:
+            self.spn_y = 99.0000
         self.search()
 
     def draw_map(self):
