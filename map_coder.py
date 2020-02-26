@@ -17,19 +17,31 @@ class MapCoder(QMainWindow, Ui_MapWindow):
         self.search_button.clicked.connect(self.search)
         self.spn_x = 0.001
         self.spn_y = 0.001
+        self.x_c = 55.777751
+        self.y_c = 58.087718
+        self.coords = str(self.x_c) + ',' + str(self.y_c)
+        self.update_map(self.get_spn())
+
+    def get_spn(self):
+        spn = str(self.spn_x) + ',' + str(self.spn_y)
+        return spn
 
     def search(self):
-        coords = self.search_edit.text().split()
-        spn = str(self.spn_x) + ',' + str(self.spn_y)
-        print(spn)
+        self.coords = self.search_edit.text()
+        self.x_c, self.y_c = self.coords.split(',')
+        spn = self.get_spn()
+        self.update_map(spn)
+        # 37.677751,55.757718
+
+    def update_map(self, spn, *pts):
+        print(spn, self.coords)
         self.map_params = {
             "l": "map",
             "size": '450,450',
-            "ll": coords,
+            "ll": self.coords,
             "spn": spn}
-            # "pt": coords}
+        # "pt": coords}
         self.draw_map()
-        # 37.677751,55.757718
 
     def keyPressEvent(self, event):
         if event.key() == Qt.Key_PageUp:
@@ -63,7 +75,7 @@ class MapCoder(QMainWindow, Ui_MapWindow):
             self.spn_y = 0.0001
         elif self.spn_y > 100:
             self.spn_y = 99.0000
-        self.search()
+        self.update_map(self.get_spn())
 
     def draw_map(self):
         try:
