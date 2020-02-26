@@ -15,35 +15,38 @@ class MapCoder(QMainWindow, Ui_MapWindow):
         super().__init__()
         self.setupUi(self)
         self.search_button.clicked.connect(self.search)
-        self.spn_x = 0.016
-        self.spn_y = 0.006
+        self.spn_x = 0.001
+        self.spn_y = 0.001
 
     def search(self):
         coords = self.search_edit.text().split()
+        spn = str(self.spn_x) + ',' + str(self.spn_y)
+        print(spn)
         self.map_params = {
             "l": "map",
             "size": '450,450',
             "ll": coords,
-            "spn": '0.016457,0.00619',
+            "spn": spn,
             "pt": coords}
         self.draw_map()
 
     def keyPressEvent(self, event):
-        print('fefefef')
         if event.key() == Qt.Key_PageUp:
             self.change_spn('+')
         if event.key() == Qt.Key_PageDown:
             self.change_spn('-')
 
     def change_spn(self, type_of_changing):
-        change_x, change_y = 0.001, 0.001
+        change_x, change_y = 10, 10
         if type_of_changing == '+':
-            self.spn_x += change_x
-            self.spn_y += change_y
+            self.spn_x *= change_x
+            self.spn_y *= change_y
         if type_of_changing == '-':
-            self.spn_x -= change_x
-            self.spn_y -= change_y
-        self.draw_map()
+            self.spn_x //= change_x
+            self.spn_y //= change_y
+        self.spn_x = round(self.spn_x, 3)
+        self.spn_y = round(self.spn_y, 3)
+        self.search()
 
     def draw_map(self):
         try:
