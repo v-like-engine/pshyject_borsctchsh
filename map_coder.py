@@ -13,17 +13,13 @@ class MapCoder(QMainWindow, Ui_MapWindow):
         self.search_button.clicked.connect(self.search)
 
     def search(self):
-        '''
+        coords = self.search_edit.text().split()
         map_params = {
             "l": "map",
             "size": '450,450',
-            "pt": "~".join()
-            ])
-        }
-        '''
-        coords = self.search_edit.text()
+            "pt": "~".join(coords)}
         try:
-            result_map = get_map(coords)
+            result_map = get_map(map_params)
             print(result_map)
         except Exception:
             print('error')
