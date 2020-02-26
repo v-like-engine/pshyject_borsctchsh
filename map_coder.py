@@ -49,13 +49,13 @@ class MapCoder(QMainWindow, Ui_MapWindow):
         if event.key() == Qt.Key_PageDown:
             self.change_spn('-')
         if event.key() == Qt.Key_Down:
-            pass
+            self.change_coord('v')
         if event.key() == Qt.Key_Up:
-            pass
+            self.change_coord('^')
         if event.key() == Qt.Key_Left:
-            pass
+            self.change_coord('<')
         if event.key() == Qt.Key_Right:
-            pass
+            self.change_coord('>')
 
     def change_spn(self, type_of_changing):
         change_x, change_y = 2, 2
@@ -75,6 +75,21 @@ class MapCoder(QMainWindow, Ui_MapWindow):
             self.spn_y = 0.0001
         elif self.spn_y > 100:
             self.spn_y = 99.0000
+        self.update_map(self.get_spn())
+
+    def change_coord(self, type_of_changing):
+        change_x, change_y = 0.01, 0.01
+        if type_of_changing == '>':
+            self.x_c += change_x
+        if type_of_changing == '<':
+            self.x_c -= change_x
+        if type_of_changing == '^':
+            self.y_c += change_y
+        if type_of_changing == 'v':
+            self.y_c -= change_y
+        self.x_c = round(self.x_c, 6)
+        self.y_c = round(self.y_c, 6)
+        self.coords = str(self.x_c) + ',' + str(self.y_c)
         self.update_map(self.get_spn())
 
     def draw_map(self):
