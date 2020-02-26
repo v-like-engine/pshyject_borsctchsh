@@ -35,6 +35,14 @@ class MapCoder(QMainWindow, Ui_MapWindow):
             self.change_spn('+')
         if event.key() == Qt.Key_PageDown:
             self.change_spn('-')
+        if event.key() == Qt.Key_Down:
+            pass
+        if event.key() == Qt.Key_Up:
+            pass
+        if event.key() == Qt.Key_Left:
+            pass
+        if event.key() == Qt.Key_Right:
+            pass
 
     def change_spn(self, type_of_changing):
         change_x, change_y = 10, 10
