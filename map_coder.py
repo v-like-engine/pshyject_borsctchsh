@@ -2,10 +2,10 @@ import sys
 
 from PyQt5.QtWidgets import QMainWindow
 
-from ui.mapcoderwindow import MapCoderUi
+from ui.mapcoderwindow import Ui_MapWindow
 
 
-class MapCoder(QMainWindow, MapCoderUi):
+class MapCoder(QMainWindow, Ui_MapWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)

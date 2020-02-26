@@ -10,7 +10,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class MapCoderUi(object):
+class Ui_MapWindow(object):
     def setupUi(self, MapWindow):
         MapWindow.setObjectName("MapWindow")
         MapWindow.resize(1280, 720)
