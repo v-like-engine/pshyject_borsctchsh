@@ -15,31 +15,24 @@ class MapCoder(QMainWindow, Ui_MapWindow):
         super().__init__()
         self.setupUi(self)
         self.search_button.clicked.connect(self.search)
-        self.spn_x = 0.001
-        self.spn_y = 0.001
+        self.z = 10
         self.x_c = 55.777751
         self.y_c = 58.087718
         self.coords = str(self.x_c) + ',' + str(self.y_c)
-        self.update_map(self.get_spn())
-
-    def get_spn(self):
-        spn = str(self.spn_x) + ',' + str(self.spn_y)
-        return spn
+        self.update_map()
 
     def search(self):
         self.coords = self.search_edit.text()
         self.x_c, self.y_c = self.coords.split(',')
-        spn = self.get_spn()
-        self.update_map(spn)
+        self.update_map()
         # 37.677751,55.757718
 
-    def update_map(self, spn, *pts):
-        print(spn, self.coords)
+    def update_map(self, *pts):
         self.map_params = {
             "l": "map",
             "size": '450,450',
             "ll": self.coords,
-            "spn": spn}
+            'z': str(self.z)}
         # "pt": coords}
         self.draw_map()
 
@@ -58,27 +51,19 @@ class MapCoder(QMainWindow, Ui_MapWindow):
             self.change_coord('>')
 
     def change_spn(self, type_of_changing):
-        change_x, change_y = 2, 2
+        change = 1
         if type_of_changing == '+':
-            self.spn_x *= change_x
-            self.spn_y *= change_y
+            self.z += 1
         if type_of_changing == '-':
-            self.spn_x /= change_x
-            self.spn_y /= change_y
-        self.spn_x = round(self.spn_x, 4)
-        self.spn_y = round(self.spn_y, 4)
-        if self.spn_x == 0:
-            self.spn_x = 0.0001
-        elif self.spn_x > 100:
-            self.spn_x = 99.0000
-        if self.spn_y == 0:
-            self.spn_y = 0.0001
-        elif self.spn_y > 100:
-            self.spn_y = 99.0000
-        self.update_map(self.get_spn())
+            self.z -= 1
+        if self.z > 17:
+            self.z = 17
+        elif self.z < 1:
+            self.z = 1
+        self.update_map()
 
     def change_coord(self, type_of_changing):
-        change_x, change_y = 0.01, 0.01
+        change_x, change_y = self.z * self.x_c, self.z * self.y_c
         if type_of_changing == '>':
             self.x_c += change_x
         if type_of_changing == '<':
@@ -87,10 +72,8 @@ class MapCoder(QMainWindow, Ui_MapWindow):
             self.y_c += change_y
         if type_of_changing == 'v':
             self.y_c -= change_y
-        self.x_c = round(self.x_c, 6)
-        self.y_c = round(self.y_c, 6)
         self.coords = str(self.x_c) + ',' + str(self.y_c)
-        self.update_map(self.get_spn())
+        self.update_map()
 
     def draw_map(self):
         try:
